@@ -1,0 +1,49 @@
+<div class="d-flex justify-content-center align-items-center">
+  <div class="p-4">
+    <h2 class="mb-4">Register Aadhar</h2>
+    <div class="mb-4 text-center">
+      <img src="/src/assets/1200px-Aadhaar_Logo.svg.png" alt="Image" class="img-fluid" />
+    </div>
+    <form #myForm="ngForm" (ngSubmit)="submitForm()" class="needs-validation" novalidate>
+      <div class="form-group">
+        <input
+          type="text"
+          name="myInput"
+          [(ngModel)]="myInput"
+          pattern="^[0-9]{12}$"
+          required
+          class="form-control"
+          #myInputField="ngModel"
+          placeholder="Enter Aadhar number"
+        />
+        <div *ngIf="myInputField.invalid && (myInputField.dirty || myInputField.touched)" class="mt-2">
+          <p class="validation-message" *ngIf="myInputField.hasError('required')">Please enter 12 numbers.</p>
+          <p class="validation-message" *ngIf="myInputField.hasError('pattern')">Please enter a valid Aadhar number.</p>
+        </div>
+      </div>
+      <br>
+      <button type="submit" [disabled]="myForm.invalid" class="btn btn-primary">Verify</button>
+      <br>
+      <div *ngIf="myForm.controls['myInput'].valid && myForm.controls['myInput'].touched" class="form-group form-check mt-3">
+        <input
+          type="checkbox"
+          name="agree"
+          [(ngModel)]="agree"
+          class="form-check-input"
+          id="agreeCheckbox"
+        />
+        <label class="form-check-label" for="agreeCheckbox">
+          I agree to eSign this KYC document to get started
+        </label>
+      </div>
+      <button
+        type="submit"
+        [disabled]="myForm.invalid || !agree"
+        class="btn btn-primary mt-3"
+        [routerLink]="['/popup']"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</div>
